@@ -11,11 +11,14 @@ import {TodoService} from '../todo.service';
 })
 export class TodoListComponent implements OnInit {
 
-  @Input() 
-  
+  @Input()
+ private filterAll = 'filterAll';
   private data: TodoListData;
-  
-  constructor(private todoService: TodoService) { 
+
+  private titre: string;
+  constructor(private todoService: TodoService) {
+    todoService.getTodoListDataObserver().subscribe(tdl => this.data = tdl);
+    this.titre = this.data.label;
   }
 
   ngOnInit() {
@@ -28,5 +31,33 @@ export class TodoListComponent implements OnInit {
   get items(): TodoItemData[] {
     return this.data ? this.data.items : [];
   }
+
+  appendItem(label: String) {
+    console.log(label);
+    this.todoService.appendItems(
+      {
+        label, isDone: false
+      }
+    );
+  }
+  itemDone(item: TodoItemData, done: boolean) {
+    this.todoService.setItemsDone(done, item);
+  }
+  itemLabel(item: TodoItemData, label: string) {
+    this.todoService.setItemsLabel(label, item);
+}
+itemDelete(item: TodoItemData) {
+    this.todoService.removeItems(item);
+}
+removeCheckedItems() {
+    this.data.items.map(item => {
+      if (item.isDone) {
+        this.todoService.removeItems(item);
+      }
+    });
+}
+viewAllCompleted() {
+
+}
 
 }

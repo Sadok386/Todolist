@@ -1,4 +1,6 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
+import {TodoItemData} from "../dataTypes/TodoItemData";
+import {TodoService} from "../todo.service";
 
 @Component({
   selector: 'app-todo-item',
@@ -7,10 +9,19 @@ import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TodoItemComponent implements OnInit {
-
-  constructor() { }
+@Input() private data: TodoItemData;
+  constructor(private  todoService: TodoService) { }
 
   ngOnInit() {
+  }
+  get label(): string {
+  return this.data.label;
+  }
+  removeData() {
+    this.todoService.removeItems(this.data);
+  }
+  dataDone(done: boolean) {
+    this.todoService.setItemsDone(done, this.data);
   }
 
 }
