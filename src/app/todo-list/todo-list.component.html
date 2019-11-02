@@ -15,25 +15,26 @@
             name="toggleAll"
     />
     <ul class="todo-list">
-        <li *ngFor="let item of items">
-          <app-todo-item [data]="item"></app-todo-item>
-          <app-todo-item [data]="item" *ngIf="item.isDone"></app-todo-item>
+        <li *ngFor="let item of items" >
+          <app-todo-item [data]="item" *ngIf="statusList == 'All'"></app-todo-item>
+          <app-todo-item [data]="item" *ngIf="statusList == 'Pending' && item.isDone != true"></app-todo-item>
+          <app-todo-item [data]="item" *ngIf="statusList == 'Completed'  && item.isDone"></app-todo-item>
         </li>
 
 
     </ul>
   </section>
   <footer class="footer">
-    <span class="todo-count"><strong></strong> restantes</span>
+    <span class="todo-count"><strong>{{compteurChecked()}}</strong> restantes</span>
     <ul class="filters">
       <li>
-        <a class="filterAll">Tous</a>
+        <a class="filterAll" (click)="AllList()">Tous</a>
       </li>
       <li>
-        <a class="filterActives">Actifs</a>
+        <a class="filterActives" (click)="pendingList()">Actifs</a>
       </li>
-      <li *ngFor="let item of items">
-        <a class="filterCompleted" >Complétés</a>
+      <li>
+        <a class="filterCompleted" (click)="CompletedList()">Complétés</a>
       </li>
     </ul>
     <button class="clear-completed" (click)="removeCheckedItems()">Supprimer cochées</button>
