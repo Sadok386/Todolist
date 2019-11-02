@@ -2,17 +2,23 @@ import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
 import {TodoListData} from '../dataTypes/TodoListData';
 import {TodoItemData} from '../dataTypes/TodoItemData';
 import {TodoService} from '../todo.service';
-
+export enum statusResult {
+  All,
+  Pending,
+  Completed,
+}
 @Component({
   selector: 'app-todo-list',
   templateUrl: './todo-list.component.html',
   styleUrls: ['./todo-list.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
+
 export class TodoListComponent implements OnInit {
 
   @Input()
- private filterAll = 'filterAll';
+ private statusList = 'All';
+
   private data: TodoListData;
 
   private titre: string;
@@ -32,7 +38,7 @@ export class TodoListComponent implements OnInit {
     return this.data ? this.data.items : [];
   }
 
-  appendItem(label: String) {
+  appendItem(label: string) {
     console.log(label);
     this.todoService.appendItems(
       {
@@ -56,8 +62,19 @@ removeCheckedItems() {
       }
     });
 }
-viewAllCompleted() {
+  get statusResult() {return statusResult; }
 
+  pendingList() {
+    this.statusList = 'Pending'; }
+  AllList() {
+    this.statusList = 'All'; }
+  CompletedList() {
+    this.statusList = 'Completed'; }
+    
+    
+  compteurChecked(){
+    return (this.data.items.length - this.data.items.filter(item =>item.isDone).length);
+  }
 }
+  
 
-}
