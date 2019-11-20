@@ -6,7 +6,10 @@
               name        = "newTodoInput"
               class       = "new-todo"
               placeholder = "Que faire?"
-              autofocus />
+              autofocus
+              
+              />
+              
     </form>
   </header>
   <section class="main">
@@ -86,4 +89,5 @@
     <pre>{{item | json}}</pre>
   </li>
 </ul>
-
+<button (click)="record()">record</button>
+<label >{{final_transcript}}</label>
