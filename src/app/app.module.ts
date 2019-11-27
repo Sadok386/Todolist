@@ -7,7 +7,7 @@ import { TodoListComponent } from './todo-list/todo-list.component';
 import { TodoItemComponent } from './todo-item/todo-item.component';
 import {TodoService} from './todo.service';
 import {FormsModule} from '@angular/forms';
-
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -16,6 +16,7 @@ import {FormsModule} from '@angular/forms';
     TodoItemComponent
   ],
   imports: [
+    FontAwesomeModule,
     BrowserModule, FormsModule
   ],
   providers: [TodoService],

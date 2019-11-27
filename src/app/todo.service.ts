@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import {TodoListData} from './dataTypes/TodoListData';
 import {Observable, BehaviorSubject} from 'rxjs';
 import {TodoItemData} from './dataTypes/TodoItemData';
+import { async } from 'q';
+declare var webkitSpeechRecognition: any;
 
 @Injectable()
 export class TodoService {
@@ -31,6 +33,7 @@ export class TodoService {
   }
 
   appendItems( ...items: TodoItemData[] ) {
+    console.log('Bien');
     const tdl = this.todoListSubject.getValue();
     this.todoListSubject.next( {
       label: tdl.label, // ou on peut écrire: ...tdl,
@@ -45,5 +48,6 @@ export class TodoService {
       items: tdl.items.filter( I => items.indexOf(I) === -1 )
     });
   }
+
 
 }
