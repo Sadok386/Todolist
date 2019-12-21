@@ -32,6 +32,7 @@ export class TodoListComponent implements OnInit {
   }
 
   ngOnInit() {
+    //Chargement du local Storage
       for (let i = 0; i < localStorage.length; i++){
         let key = localStorage.key(i);
         let value = localStorage.getItem(key);
@@ -51,6 +52,7 @@ export class TodoListComponent implements OnInit {
   get items(): TodoItemData[] {
     return this.data ? this.data.items : [];
   }
+  //Stockage des items dans le localStorage
   storage(){
     this.data.items.forEach(item => {
       localStorage.setItem(item.label, item.label);
@@ -76,6 +78,8 @@ export class TodoListComponent implements OnInit {
   itemDelete(item: TodoItemData) {
     this.todoService.removeItems(item);
   }
+
+  //Supression des tâches checked
   removeCheckedItems() {
     this.data.items.map(item => {
       if (item.isDone) {
@@ -86,6 +90,7 @@ export class TodoListComponent implements OnInit {
   }
   get statusResult() { return statusResult; }
 
+  //Traitement des filtres
   pendingList() {
     this.statusList = 'Pending';
   }
@@ -96,17 +101,12 @@ export class TodoListComponent implements OnInit {
     this.statusList = 'Completed';
   }
 
-
-
+//Compteur item restant
   compteurChecked() {
     return (this.data.items.length - this.data.items.filter(item => item.isDone).length);
   }
 
-
-  checkValueSpeech(valeur: string) {
-    this.appendItem(valeur)
-
-  }
+  //Méthode de reconaissance vocal (fonctionne sous Chrome)
   record() {
 
     var recognition = new webkitSpeechRecognition();
@@ -168,13 +168,14 @@ export class TodoListComponent implements OnInit {
         recognition.onend();
       }
       catch{
-        console.log('IsAgirou');
+        console.log('Error on voiceSpeech');
       }
     }
 main()
-    .then(() =>  'Yo');
+    .then(() =>  console.log('Fin de la requête async'));
     
   }
+
   //Supprime tous les items
   removeAll() {
     // console.log("Supprime tout");
