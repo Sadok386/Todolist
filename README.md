@@ -1,25 +1,22 @@
 # MIASHS-M2-TP3-Projet
 
-## Development server
+## Clone project
+
+Run `https://github.com/Sadok386/Todolist.git` to download the project.
+
+## Get package using npm
+
+Run `npm install` to download packages needed for the project
+Be sur to run this in `Todolist` folder.
+
+## Start server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
-## Code scaffolding
+## About Voice speech
+It seems `webkitSpeechRecognition` is only working with Chrome for the moment.
+Src: `https://github.com/mdn/web-speech-api/issues/3`
+     `https://stackoverflow.com/questions/39784986/speechrecognition-is-not-working-in-firefox`
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+### Important 
+Also, when you click on the microphone icon, there is a problem with synchronization, the voiceSpeech work but the form is not update so when it finish recording you'll juste have to move your mouse in any direction on the form. This will force the div to update and display the word you spelled.
