@@ -20,3 +20,9 @@ Src: `https://github.com/mdn/web-speech-api/issues/3`
 
 ### Important 
 Also, when you click on the microphone icon, there is a problem with synchronization, the voiceSpeech work but the form is not update so when it finish recording you'll juste have to move your mouse in any direction on the form. This will force the div to update and display the word you spelled.
+
+##Functionnality
+LocalStorage
+Remove All
+Speech recognition
+Edit Title
