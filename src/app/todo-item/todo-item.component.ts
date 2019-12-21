@@ -20,6 +20,8 @@ public edit = false
   return this.data.label;
   }
   removeData() {
+    localStorage.removeItem(this.data.label)
+
     this.todoService.removeItems(this.data);
   }
   dataDone(done: boolean) {

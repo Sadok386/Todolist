@@ -1,7 +1,8 @@
-<section class="todoapp">
-  <header class="header">
+<section class="todoapp" (mouseover)='Speech'>
+  <header class="header" ng-init="loadStorage()">
     <h1>{{titre}}</h1>
-    <form (submit)="appendItem(newTodoInput.value); newTodoInput.value=''">
+    
+    <form (submit)="appendItem(newTodoInput.value); newTodoInput.value=''; storage();">
       <input  #newTodoInput
               name        = "newTodoInput"
               class       = "new-todo"
@@ -11,6 +12,8 @@
               />
               
     </form>
+    
+    
   </header>
   <section class="main">
     <input  class="toggle-all"
@@ -23,17 +26,20 @@
           <app-todo-item [data]="item" *ngIf="statusList == 'Pending' && item.isDone != true"></app-todo-item>
           <app-todo-item [data]="item" *ngIf="statusList == 'Completed'  && item.isDone"></app-todo-item>
         </li>
-        <li>
-          <button class="btn-supprAll" *ngIf="data.items.length > 0">
-            <fa-icon [icon]="faTrash" (click)="removeAll()"></fa-icon>
-          </button>
-        </li>
+
 
     </ul>
   </section>
   <footer class="footer">
+    
     <span class="todo-count"><strong>{{compteurChecked()}}</strong> restantes</span>
+   
     <ul class="filters">
+      <li>
+        <button placement="bottom" style="margin-right: 3vh" ngbTooltip="Reconnaissance vocal">
+          <fa-icon [icon]="faMicrophone" (click)="record()"></fa-icon>
+        </button>
+      </li>
       <li>
         <a class="filterAll" (click)="AllList()">Tous</a>
       </li>
@@ -43,11 +49,22 @@
       <li>
         <a class="filterCompleted" (click)="CompletedList()">Complétés</a>
       </li>
+      <li>
+        <button placement="bottom" ngbTooltip="Tout Supprimer"  class="btn-supprAll" *ngIf="data.items.length > 0">
+          <fa-icon [icon]="faTrash" (click)="removeAll()"></fa-icon>
+        </button>
+        
+      </li>
+      
     </ul>
-    <button class="clear-completed" (click)="removeCheckedItems()">Supprimer cochées</button>
+    <span *ngFor="let item of items">
+      <button class="clear-completed" *ngIf="items.length>0 && item.isDone>0" (click)="removeCheckedItems()">Supprimer selection</button>
+    </span>
+    <div class="one" #one></div>
   </footer>
 </section>
 <hr/>
+
 
 <!-- <h2>Debug v1</h2>
 <ul>
@@ -93,5 +110,5 @@
     <pre>{{item | json}}</pre>
   </li>
 </ul> -->
-<button (click)="record()">record</button>
+
 <label >{{final_transcript}}</label>

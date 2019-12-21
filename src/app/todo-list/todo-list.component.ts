@@ -1,8 +1,9 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit, ElementRef, AfterViewInit } from '@angular/core';
 import { TodoListData } from '../dataTypes/TodoListData';
 import { TodoItemData } from '../dataTypes/TodoItemData';
 import { TodoService } from '../todo.service';
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faMicrophone } from "@fortawesome/free-solid-svg-icons";
 declare var webkitSpeechRecognition: any;
 export enum statusResult {
   All,
@@ -22,14 +23,25 @@ export class TodoListComponent implements OnInit {
   private statusList = 'All';
   private data: TodoListData;
   faTrash = faTrash;
+  faMicrophone = faMicrophone;
 
   private titre: string;
-  constructor(private todoService: TodoService) {
+  constructor(private todoService: TodoService, elementRef:ElementRef) {
     todoService.getTodoListDataObserver().subscribe(tdl => this.data = tdl);
     this.titre = this.data.label;
   }
 
   ngOnInit() {
+      for (let i = 0; i < localStorage.length; i++){
+        let key = localStorage.key(i);
+        let value = localStorage.getItem(key);
+        this.appendItem(value);
+        console.log(key, value);
+      }
+    
+  }
+  ngAfterViewInit() {
+    
   }
 
   get label(): string {
@@ -39,9 +51,16 @@ export class TodoListComponent implements OnInit {
   get items(): TodoItemData[] {
     return this.data ? this.data.items : [];
   }
+  storage(){
+    this.data.items.forEach(item => {
+      localStorage.setItem(item.label, item.label);
+    });
+  }
+  
+  
 
   appendItem(label: string) {
-
+    localStorage.setItem(label, label);
     this.todoService.appendItems(
       {
         label, isDone: false
@@ -60,6 +79,7 @@ export class TodoListComponent implements OnInit {
   removeCheckedItems() {
     this.data.items.map(item => {
       if (item.isDone) {
+        localStorage.removeItem(item.label)
         this.todoService.removeItems(item);
       }
     });
@@ -107,7 +127,14 @@ export class TodoListComponent implements OnInit {
     recognition.onend = (() => {
       console.log('Speech recognition service disconnected'+final_transcript);
       
-       valeur = 'yo'
+      Promise.resolve(valeur=final_transcript)
+      console.log("Ma valeur "+valeur.trim)
+    
+      if(valeur !=''){
+      this.appendItem(valeur)
+          var el = document.querySelector(".one");
+    el.insertAdjacentHTML('beforeend', '<div class="two">two</div>');
+    }
 
       })
 
@@ -145,13 +172,14 @@ export class TodoListComponent implements OnInit {
       }
     }
 main()
-    .then(() =>  this.appendItem(valeur));
+    .then(() =>  'Yo');
     
   }
   //Supprime tous les items
   removeAll() {
     // console.log("Supprime tout");
     this.data.items.forEach(item => {
+      localStorage.clear();
       this.todoService.removeItems(item);
     });
   }
