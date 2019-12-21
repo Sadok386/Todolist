@@ -2,7 +2,7 @@
 
 ## Clone project
 
-Run `https://github.com/Sadok386/Todolist.git` to download the project.
+Run `git clone https://github.com/Sadok386/Todolist.git` to download the project.
 
 ## Get package using npm
 
