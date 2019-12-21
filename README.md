@@ -14,8 +14,8 @@ Be sur to run this in `Todolist` folder.
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
 ## About Voice speech
-It seems `webkitSpeechRecognition` is only working with Chrome for the moment.
-Src: `https://github.com/mdn/web-speech-api/issues/3`
+It seems `webkitSpeechRecognition` is only working with Chrome for the moment.\
+Src: `https://github.com/mdn/web-speech-api/issues/3`\
      `https://stackoverflow.com/questions/39784986/speechrecognition-is-not-working-in-firefox`
 
 ### Important 
