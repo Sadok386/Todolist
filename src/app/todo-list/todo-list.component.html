@@ -1,7 +1,16 @@
 <section class="todoapp" (mouseover)='Speech'>
   <header class="header" ng-init="loadStorage()">
-    <h1>{{titre}}</h1>
-    
+   
+    <h1 class="texte" *ngIf="!edit" (dblclick)="edit = true"> {{titre}}</h1>
+
+    <form (submit)="edit = false">
+      <input  #newTextInput
+              name    = "newTextInput"
+              class   = "edit"
+              [(ngModel)]="titre"
+              *ngIf="edit"
+              />
+    </form>
     <form (submit)="appendItem(newTodoInput.value); newTodoInput.value=''; storage();">
       <input  #newTodoInput
               name        = "newTodoInput"
