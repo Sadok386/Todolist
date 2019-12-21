@@ -1,21 +1,25 @@
-<li [class.editing] = "edit"  ><div class="view">
-  <input 	class			= "toggle"
-          type			= "checkbox"
-          name			= "fait"
-          [ngModel]="data.isDone"
-          (ngModelChange)="dataDone($event)"
-  />
-  <label 	class="texte" *ngIf="!edit" (dblclick)="edit = true" [ngStyle]="{'color':data.isDone ? '#d9d9d9' : 'black'}">{{data.label}}</label>
+<li [class.editing] = "edit"  >
+  <div class="view">
+    <input 	class			= "toggle"
+            type			= "checkbox"
+            name			= "fait"
+            [ngModel]="data.isDone"
+            (ngModelChange)="dataDone($event)"
+    />
 
-  <button class="destroy" (click)="removeData()"></button>
-</div>
-<form (submit)="edit = false">
-  <input  #newTextInput
-          name    = "newTextInput"
-          class   = "edit"
-          [(ngModel)]="data.label"
-          *ngIf="edit"
-          />
-</form>
+    <!-- Edition au double click d'un item -->
+    <label 	class="texte" *ngIf="!edit" (dblclick)="edit = true" [ngStyle]="{'color':data.isDone ? '#d9d9d9' : 'black'}">{{data.label}}</label>
+
+    <!-- Boutton de supression d'un item -->
+    <button class="destroy" (click)="removeData()"></button>
+  </div>
+  <form (submit)="edit = false">
+    <input  #newTextInput
+            name    = "newTextInput"
+            class   = "edit"
+            [(ngModel)]="data.label"
+            *ngIf="edit"
+            />
+  </form>
 </li>
 

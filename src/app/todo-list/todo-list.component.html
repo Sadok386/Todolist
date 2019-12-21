@@ -1,32 +1,56 @@
-<section class="todoapp">
+<!-- Refresh du formulaire au mouseover (utiliser pour le voice speech afin de refresh la div juste en bougeant la souris) -->
+<section class="todoapp" (mouseover)='Speech'>
   <header class="header">
-    <h1>{{titre}}</h1>
-    <form (submit)="appendItem(newTodoInput.value); newTodoInput.value=''">
+   
+     <!-- Edition du titre au double click -->
+    <h1 class="texte" *ngIf="!edit" (dblclick)="edit = true"> {{titre}}</h1>
+
+    <form (submit)="edit = false">
+      <input  #newTextInput
+              name    = "newTextInput"
+              class   = "edit"
+              [(ngModel)]="titre"
+              *ngIf="edit"
+              />
+    </form>
+     <!-- Appel de la fonction storage pour stocker les inputs -->
+    <form (submit)="appendItem(newTodoInput.value); newTodoInput.value=''; storage();">
       <input  #newTodoInput
               name        = "newTodoInput"
               class       = "new-todo"
               placeholder = "Que faire?"
-              autofocus />
+              autofocus
+              />       
     </form>
+    
+    
   </header>
   <section class="main">
     <input  class="toggle-all"
             type="checkbox"
             name="toggleAll"
     />
+    <!-- Filtre des tâches -->
     <ul class="todo-list">
         <li *ngFor="let item of items" >
           <app-todo-item [data]="item" *ngIf="statusList == 'All'"></app-todo-item>
           <app-todo-item [data]="item" *ngIf="statusList == 'Pending' && item.isDone != true"></app-todo-item>
           <app-todo-item [data]="item" *ngIf="statusList == 'Completed'  && item.isDone"></app-todo-item>
         </li>
-
-
     </ul>
   </section>
   <footer class="footer">
+    
     <span class="todo-count"><strong>{{compteurChecked()}}</strong> restantes</span>
+   
     <ul class="filters">
+      <!-- Boutton de reconnaissance vocal -->
+      <li>
+        <button placement="bottom" style="margin-right: 3vh" ngbTooltip="Reconnaissance vocal">
+          <fa-icon [icon]="faMicrophone" (click)="record()"></fa-icon>
+        </button>
+      </li>
+      <!-- Boutton de Filtre des tâches -->
       <li>
         <a class="filterAll" (click)="AllList()">Tous</a>
       </li>
@@ -36,54 +60,22 @@
       <li>
         <a class="filterCompleted" (click)="CompletedList()">Complétés</a>
       </li>
+      <li>
+        <button placement="bottom" ngbTooltip="Tout Supprimer"  class="btn-supprAll" *ngIf="data.items.length > 0">
+          <fa-icon [icon]="faTrash" (click)="removeAll()"></fa-icon>
+        </button> 
+      </li> 
     </ul>
-    <button class="clear-completed" (click)="removeCheckedItems()">Supprimer cochées</button>
+    <!-- Supprimer la selection -->
+    <span *ngIf="items.length>0">
+      <button class="clear-completed" (click)="removeCheckedItems()">Supprimer selection</button>
+    </span>
+    <div class="one" #one></div>
   </footer>
 </section>
-<hr/>
 
-<h2>Debug v1</h2>
-<ul>
-  <li *ngFor="let item of items">
-    <input type="checkbox" [ngModel]="item.isDone"/>
-    <label>{{item.label}}</label>
-    <pre>{{item | json}}</pre>
-  </li>
-</ul>
 
-<h2>Debug v2</h2>
-<ul>
-  <li *ngFor="let item of items">
-    <input type="checkbox" [ngModel]="item.isDone" (ngModelChange)="itemDone(item, $event)"/>
-    <label>{{item.label}}</label>
-    <pre>{{item | json}}</pre>
-  </li>
-</ul>
 
-<h2>Debug v3</h2>
-<ul>
-  <li *ngFor="let item of items">
-    <input type="checkbox" [ngModel]="item.isDone" (ngModelChange)="itemDone(item, $event)"/>
-    <form (submit)="itemLabel(item, newLab.value)">
-      <input type="text" name="label" [ngModel]="item.label" #newLab/>
 
-    </form>
-    <label>{{item.label}}</label>
-    <pre>{{item | json}}</pre>
-  </li>
-</ul>
 
-<h2>Debug v3</h2>
-<ul>
-  <li *ngFor="let item of items">
-    <input type="checkbox" [ngModel]="item.isDone" (ngModelChange)="itemDone(item, $event)"/>
-    <form (submit)="itemLabel(item, newLab.value)">
-      <input type="text" name="label" [ngModel]="item.label" #newLab/>
-
-    </form>
-    <button (click)="itemDelete(item)">DELETE</button>
-    <label>{{item.label}}</label>
-    <pre>{{item | json}}</pre>
-  </li>
-</ul>
 
